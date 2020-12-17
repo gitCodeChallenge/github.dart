@@ -27,8 +27,9 @@ class PaginationHelper {
     } else {
       params = Map.from(params);
     }
-    assert(!params.containsKey('page'));
+    //assert(!params.containsKey('page'));
 
+    bool customMode = params.containsKey('page');
     // ignore: literal_only_boolean_expressions
     while (true) {
       http.Response response;
@@ -72,10 +73,16 @@ class PaginationHelper {
         break;
       }
 
-      final nextUrl = Uri.parse(next);
-      final nextPageArg = nextUrl.queryParameters['page'];
-      assert(nextPageArg != null);
-      params['page'] = nextPageArg;
+      if(customMode){
+        break;
+      }else{
+        final nextUrl = Uri.parse(next);
+        final nextPageArg = nextUrl.queryParameters['page'];
+        assert(nextPageArg != null);
+        params['page'] = nextPageArg;
+      }
+
+
     }
   }
 
